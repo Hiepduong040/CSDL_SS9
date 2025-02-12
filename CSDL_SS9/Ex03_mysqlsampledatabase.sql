@@ -159,8 +159,11 @@ create index idx_country on customers(country);
 explain analyze
 select * 
 from customers where country = 'Germany';
-/* kết quả cho thấy sau khi đánh chỉ mục tốc độ truy vấn được giảm đáng kể
+/* 
+kết quả cho thấy sau khi đánh chỉ mục tốc độ truy vấn được giảm đáng kể
 với 1 mức chi phí gần như ngang nhau.
+lý do :  trước khi tạo chỉ mục, MySQL phải thực hiện quét toàn bộ bảng, dẫn đến hiệu suất kém khi bảng có nhiều dữ liệu.
+         Sau khi tạo chỉ mục, MySQL có thể tìm kiếm nhanh chóng bằng thuật toán B-tree hoặc hash table kiểm tra ít bản ghi hơn, giúp cải thiện tốc độ truy vấn.
 */
 -- 5
 drop index idx_country on customers;
